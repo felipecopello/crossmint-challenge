@@ -1,0 +1,16 @@
+crossmint:
+  api:
+    base-url: https://challenge.crossmint.io/api/
+    candidate-id:
+  retry:
+    max-attempts: 10
+    backoff-ms: 4000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    root: INFO
+    io.crossmint: DEBUG
