@@ -1,41 +1,34 @@
 package io.crossmint.config;
 
-import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
+@Getter
+@Setter
 @Configuration
 @ConfigurationProperties(prefix = "crossmint")
 @Validated
 public class Properties {
 
   private final Api api = new Api();
+  private final Retry retry = new Retry();
 
-  public Api getApi() {
-    return api;
+  @Getter
+  @Setter
+  public static class Api {
+    private String baseUrl;
+    private String polyanetUrl;
+    private String goalUrl;
+    private String candidateId;
   }
 
-  public static class Api {
-
-    @NotBlank private String baseUrl;
-
-    @NotBlank private String candidateId;
-
-    public String getBaseUrl() {
-      return baseUrl;
-    }
-
-    public void setBaseUrl(String baseUrl) {
-      this.baseUrl = baseUrl;
-    }
-
-    public String getCandidateId() {
-      return candidateId;
-    }
-
-    public void setCandidateId(String candidateId) {
-      this.candidateId = candidateId;
-    }
+  @Getter
+  @Setter
+  public static class Retry {
+    private int maxAttempts;
+    private long delay;
   }
 }

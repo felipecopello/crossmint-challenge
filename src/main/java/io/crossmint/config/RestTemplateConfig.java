@@ -10,14 +10,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
-
   @Bean
   public RestTemplate restTemplate() {
-
     CloseableHttpClient httpClient =
         HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy()).build();
     HttpComponentsClientHttpRequestFactory requestFactory =
         new HttpComponentsClientHttpRequestFactory(httpClient);
+
     return new RestTemplate(requestFactory);
   }
 }

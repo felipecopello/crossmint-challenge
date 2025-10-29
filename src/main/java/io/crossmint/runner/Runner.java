@@ -2,7 +2,6 @@ package io.crossmint.runner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.crossmint.handler.Handler;
-import io.crossmint.models.Polyanet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,9 +23,9 @@ public class Runner implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws JsonProcessingException {
-    LOGGER.info("***** ----- Creation started ----- *****");
-    handler.handleCreation(new Polyanet("2", "3"));
-    LOGGER.info("***** ----- Creation finished ----- *****");
+    LOGGER.info("***** ----- Task 1 started ----- *****");
+    handler.handleTaskOne();
+    LOGGER.info("***** ----- Task 1 finished ----- *****");
 
     SpringApplication.exit(context, () -> 0);
   }

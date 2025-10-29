@@ -1,10 +1,11 @@
 crossmint:
   api:
-    base-url: https://challenge.crossmint.io/api/
     candidate-id:
+    polyanet-url: https://challenge.crossmint.io/api/polyanets
+    goal-url: https://challenge.crossmint.io/api/map/your-id/goal
   retry:
     max-attempts: 10
-    backoff-ms: 4000
+    delay: 4000
 
 spring:
   main:
