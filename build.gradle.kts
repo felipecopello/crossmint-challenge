@@ -16,6 +16,7 @@ repositories {
 spotless {
     java {
         target("src/**/*.java")
+        removeUnusedImports()
         googleJavaFormat("1.21.0")
     }
 }

@@ -11,17 +11,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class Handler {
   private static final Logger LOGGER = LoggerFactory.getLogger(Handler.class);
-
   private final ApiService apiService;
 
   public Handler(ApiService apiService) {
     this.apiService = apiService;
   }
 
-  public void handleTaskOne() {
-    LOGGER.info("Handling task 1");
+  public void handleTask() {
+    LOGGER.info("Handling task");
     Goal goal = apiService.retrieveGoal();
-    List<AstralObject> gridPattern = apiService.extractPolyanets(goal);
+    List<AstralObject> gridPattern = apiService.extractPattern(goal);
     for (AstralObject astralObject : gridPattern) {
       apiService.createObject(astralObject);
     }

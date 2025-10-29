@@ -21,6 +21,8 @@ public class Properties {
   public static class Api {
     private String baseUrl;
     private String polyanetUrl;
+    private String soloonUrl;
+    private String comethUrl;
     private String goalUrl;
     private String candidateId;
   }

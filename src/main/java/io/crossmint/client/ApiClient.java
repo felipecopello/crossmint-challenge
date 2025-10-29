@@ -1,9 +1,7 @@
 package io.crossmint.client;
 
 import io.crossmint.config.Properties;
-import io.crossmint.model.Cometh;
 import io.crossmint.model.Goal;
-import io.crossmint.model.Soloon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -34,7 +32,6 @@ public class ApiClient {
       backoff = @Backoff(delayExpression = "#{@properties.retry.delay}"))
   public ResponseEntity<?> postPolyanet(HttpEntity<String> entity) {
     LOGGER.info("POST request to /polyanets");
-
     ResponseEntity<?> response =
         restTemplate.exchange(
             properties.getApi().getPolyanetUrl(), HttpMethod.POST, entity, Void.class);
@@ -43,32 +40,45 @@ public class ApiClient {
     return response;
   }
 
-  public void deletePolyanet(int row, int column) {}
-
   @Retryable(
       retryFor = HttpClientErrorException.class,
       maxAttemptsExpression = "#{@properties.retry.maxAttempts}",
       backoff = @Backoff(delayExpression = "#{@properties.retry.delay}"))
   public ResponseEntity<?> getGoal(HttpEntity<String> entity) {
     LOGGER.info("GET request to /goal");
-
     ResponseEntity<?> response =
         restTemplate.exchange(properties.getApi().getGoalUrl(), HttpMethod.GET, entity, Void.class);
 
     return followRedirectIfPresent(response, entity, HttpMethod.GET, Goal.class);
   }
 
-  public Soloon createSoloon(int row, int column, String color) {
-    return null;
+  @Retryable(
+      retryFor = HttpClientErrorException.class,
+      maxAttemptsExpression = "#{@properties.retry.maxAttempts}",
+      backoff = @Backoff(delayExpression = "#{@properties.retry.delay}"))
+  public ResponseEntity<?> postSoloon(HttpEntity<String> entity) {
+    LOGGER.info("POST request to /soloons");
+    ResponseEntity<?> response =
+        restTemplate.exchange(
+            properties.getApi().getSoloonUrl(), HttpMethod.POST, entity, Void.class);
+
+    followRedirectIfPresent(response, entity, HttpMethod.POST, Void.class);
+    return response;
   }
 
-  public void deleteSoloon(int row, int column) {}
+  @Retryable(
+      retryFor = HttpClientErrorException.class,
+      maxAttemptsExpression = "#{@properties.retry.maxAttempts}",
+      backoff = @Backoff(delayExpression = "#{@properties.retry.delay}"))
+  public ResponseEntity<?> postCometh(HttpEntity<String> entity) {
+    LOGGER.info("POST request to /soloons");
+    ResponseEntity<?> response =
+        restTemplate.exchange(
+            properties.getApi().getComethUrl(), HttpMethod.POST, entity, Void.class);
 
-  public Cometh createCometh(int row, int column, String direction) {
+    followRedirectIfPresent(response, entity, HttpMethod.POST, Void.class);
     return null;
   }
-
-  public void deleteCometh(int row, int column) {}
 
   public ResponseEntity<?> followRedirectIfPresent(
       ResponseEntity<?> response,
@@ -82,7 +92,7 @@ public class ApiClient {
 
       if (url != null) {
         response = restTemplate.exchange(url, method, entity, responseType);
-        LOGGER.info("RETRIED STATUS CODE: " + response.getStatusCode());
+        LOGGER.info("REDIRECTED STATUS CODE: " + response.getStatusCode());
       }
     }
     return response;

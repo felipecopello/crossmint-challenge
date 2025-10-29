@@ -17,4 +17,20 @@ public class Soloon extends AstralObject {
     setRow(row);
     this.color = color;
   }
+
+  public static class Builder extends AstralObject.Builder<Builder, Soloon> {
+    public Builder() {
+      super(new Soloon());
+    }
+
+    public Builder color(String color) {
+      instance.setColor(color);
+      return this;
+    }
+
+    @Override
+    public Soloon build() {
+      return instance;
+    }
+  }
 }
