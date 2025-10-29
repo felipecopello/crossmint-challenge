@@ -2,7 +2,7 @@ package io.crossmint.handler;
 
 import io.crossmint.model.AstralObject;
 import io.crossmint.model.Goal;
-import io.crossmint.service.ApiService;
+import io.crossmint.service.ApiServiceImpl;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,18 +11,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class Handler {
   private static final Logger LOGGER = LoggerFactory.getLogger(Handler.class);
-  private final ApiService apiService;
+  private final ApiServiceImpl apiServiceImpl;
 
-  public Handler(ApiService apiService) {
-    this.apiService = apiService;
+  public Handler(ApiServiceImpl apiServiceImpl) {
+    this.apiServiceImpl = apiServiceImpl;
   }
 
   public void handleTask() {
     LOGGER.info("Handling task");
-    Goal goal = apiService.retrieveGoal();
-    List<AstralObject> gridPattern = apiService.extractPattern(goal);
+    Goal goal = apiServiceImpl.retrieveGoal();
+    List<AstralObject> gridPattern = apiServiceImpl.extractPattern(goal);
     for (AstralObject astralObject : gridPattern) {
-      apiService.createObject(astralObject);
+      apiServiceImpl.createObject(astralObject);
     }
   }
 }

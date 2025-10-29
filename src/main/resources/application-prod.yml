@@ -1,6 +1,6 @@
 crossmint:
   api:
-    candidate-id:
+    candidate-id: [your-id]
     polyanet-url: https://challenge.crossmint.io/api/polyanets
     goal-url: https://challenge.crossmint.io/api/map/[your-id]/goal
     soloon-url: https://challenge.crossmint.io/api/soloons

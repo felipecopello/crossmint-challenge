@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 
 import io.crossmint.client.ApiClient;
 import io.crossmint.model.*;
-import io.crossmint.service.ApiService;
+import io.crossmint.service.ApiServiceImpl;
 import io.crossmint.utils.Mapper;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ class ApiServiceTest {
 
   @Mock private Mapper mapper;
 
-  @InjectMocks private ApiService apiService;
+  @InjectMocks private ApiServiceImpl apiServiceImpl;
 
   @BeforeEach
   void setUp() {
@@ -36,7 +36,7 @@ class ApiServiceTest {
     when(mapper.buildJsonBody(polyanet)).thenReturn(jsonBody);
     when(apiClient.postPolyanet(any(HttpEntity.class))).thenReturn(ResponseEntity.ok().build());
 
-    apiService.createObject(polyanet);
+    apiServiceImpl.createObject(polyanet);
 
     verify(mapper).buildJsonBody(polyanet);
     verify(apiClient).postPolyanet(any(HttpEntity.class));
@@ -50,7 +50,7 @@ class ApiServiceTest {
     when(mapper.buildJsonBody(soloon)).thenReturn(jsonBody);
     when(apiClient.postSoloon(any(HttpEntity.class))).thenReturn(ResponseEntity.ok().build());
 
-    apiService.createObject(soloon);
+    apiServiceImpl.createObject(soloon);
 
     verify(mapper).buildJsonBody(soloon);
     verify(apiClient).postSoloon(any(HttpEntity.class));
@@ -64,7 +64,7 @@ class ApiServiceTest {
     when(mapper.buildJsonBody(cometh)).thenReturn(jsonBody);
     when(apiClient.postCometh(any(HttpEntity.class))).thenReturn(ResponseEntity.ok().build());
 
-    apiService.createObject(cometh);
+    apiServiceImpl.createObject(cometh);
 
     verify(mapper).buildJsonBody(cometh);
     verify(apiClient).postCometh(any(HttpEntity.class));
@@ -75,7 +75,8 @@ class ApiServiceTest {
     AstralObject unsupported = new AstralObject() {}; // anonymous subclass
 
     IllegalArgumentException exception =
-        assertThrows(IllegalArgumentException.class, () -> apiService.createObject(unsupported));
+        assertThrows(
+            IllegalArgumentException.class, () -> apiServiceImpl.createObject(unsupported));
 
     assertTrue(exception.getMessage().contains("Unsupported AstralObject type"));
   }
@@ -87,7 +88,7 @@ class ApiServiceTest {
 
     when(apiClient.getGoal(any(HttpEntity.class))).thenReturn(responseEntity);
 
-    Goal result = apiService.retrieveGoal();
+    Goal result = apiServiceImpl.retrieveGoal();
 
     assertEquals(goal, result);
     verify(apiClient).getGoal(any(HttpEntity.class));
@@ -95,7 +96,7 @@ class ApiServiceTest {
 
   @Test
   void testExtractPattern_NullGoal() {
-    List<AstralObject> result = apiService.extractPattern(null);
+    List<AstralObject> result = apiServiceImpl.extractPattern(null);
     assertTrue(result.isEmpty());
   }
 
@@ -104,7 +105,7 @@ class ApiServiceTest {
     Goal goal = new Goal();
     goal.setGoal(new ArrayList<>());
 
-    List<AstralObject> result = apiService.extractPattern(goal);
+    List<AstralObject> result = apiServiceImpl.extractPattern(goal);
     assertTrue(result.isEmpty());
   }
 
@@ -118,7 +119,7 @@ class ApiServiceTest {
     Goal goal = new Goal();
     goal.setGoal(grid);
 
-    List<AstralObject> objects = apiService.extractPattern(goal);
+    List<AstralObject> objects = apiServiceImpl.extractPattern(goal);
 
     assertEquals(6, objects.size());
     assertTrue(objects.stream().anyMatch(o -> o instanceof Polyanet));

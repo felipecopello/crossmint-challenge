@@ -73,8 +73,8 @@ This app will retrieve the goal and solve it in a single run. This implementatio
    ```yaml
    crossmint:
      api:
-       base-url: https://challenge.crossmint.io/api/
        candidate-id: your-candidate-id
+       goal-url: https://challenge.crossmint.io/api/map/your-candidate-id/goal
    ```
 2. Build and run the project:
 
