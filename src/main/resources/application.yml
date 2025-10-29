@@ -1,0 +1,15 @@
+crossmint:
+  retry:
+    max-attempts: 10
+    delay: 4000
+
+spring:
+  profiles:
+    active: prod
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    root: INFO
+    io.crossmint: DEBUG
