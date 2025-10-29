@@ -1,8 +1,24 @@
 plugins {
     id("java")
+    id("jacoco")
     id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
     id("com.diffplug.spotless") version "6.23.0"
+}
+
+jacoco {
+    toolVersion = "0.8.12" // Use latest stable version
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests must run before generating report
+
+    reports {
+        xml.required.set(true)  // generate XML report (good for CI tools)
+        csv.required.set(false)
+        html.required.set(true) // generate HTML report
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco"))
+    }
 }
 
 group = "io.crossmint"
@@ -38,8 +54,16 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:1.18.34")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation ("org.mockito:mockito-core:5.4.0")
+    testImplementation ("org.mockito:mockito-junit-jupiter:5.4.0")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.register("runApp") {
+    dependsOn("spotlessCheck", "test")
+    finalizedBy("bootRun")
 }

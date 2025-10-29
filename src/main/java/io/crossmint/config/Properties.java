@@ -1,6 +1,8 @@
 package io.crossmint.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +31,8 @@ public class Properties {
 
   @Getter
   @Setter
+  @AllArgsConstructor
+  @NoArgsConstructor
   public static class Retry {
     private int maxAttempts;
     private long delay;

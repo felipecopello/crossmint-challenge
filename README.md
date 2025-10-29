@@ -79,6 +79,5 @@ This app will retrieve the goal and solve it in a single run. This implementatio
 2. Build and run the project:
 
    ```bash
-   ./gradlew clean build
-   ./gradlew bootRun
+   ./gradlew runApp
 Alternatively, you can run the main method directly from your IDE by executing the Application.java class.
